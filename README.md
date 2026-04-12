@@ -25,7 +25,7 @@ Variables defaults (`defaults/main.yml`):
 | `beszel_agent_image`  | `"henrygd/beszel-agent:latest"`| Docker image to use for the Beszel agent         |
 | `beszel_agent_port`   | `45876`                        | Port the agent listens on                        |
 | `beszel_agent_key`    | `""`                           | Public key from the Beszel hub for authentication|
-| `beszel_hub_url`      | `""`                           | URL of the Beszel hub instance                   |
+| `beszel_agent_hub_url`      | `""`                           | URL of the Beszel hub instance                   |
 
 ## Installation
 
