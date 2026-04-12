@@ -1,16 +1,16 @@
 ---
-# roles/ansible_role_template/meta/main.yml
+# roles/ansible_role_beszel_agent/meta/main.yml
 
 galaxy_info:
-  role_name: template
+  role_name: ansible_role_beszel_agent
   author: Max Bergmann
-  description: An Ansible role template
+  description: Deploys the Beszel agent via Docker Compose to monitor a host with a Beszel hub instance.
   license: Unlicense
-  min_ansible_version: "2.10"
+  min_ansible_version: "2.17"
   platforms:
     - name: Ubuntu
   galaxy_tags:
-    - template
-    - foo
-    - bar
+    - beszel
+    - monitoring
+    - docker
 dependencies: []

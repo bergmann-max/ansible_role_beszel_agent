@@ -1,12 +1,28 @@
 ---
-# roles/ansible_role_template/tasks/main.yml
+# roles/ansible_role_beszel_agent/tasks/main.yml
 
-- name: Foo_Bar
-  tags: foo, bar
+- name: Deploy Beszel Agent
   block:
 
-    - name: Update repositories cache and install "foo" package
-      ansible.builtin.apt:
-        name: foo
-        update_cache: true
-      notify: bar
+    - name: Ensure beszel-agent directory exists
+      ansible.builtin.file:
+        path: "{{ beszel_agent_dir }}"
+        state: directory
+        owner: "{{ beszel_agent_owner }}"
+        group: "{{ beszel_agent_group }}"
+        mode: "u=rwx,g=rx,o="
+
+    - name: Deploy docker-compose.yml
+      ansible.builtin.template:
+        src: docker-compose.yml.j2
+        dest: "{{ beszel_agent_dir }}/docker-compose.yml"
+        owner: "{{ beszel_agent_owner }}"
+        group: "{{ beszel_agent_group }}"
+        mode: "u=rw,g=r,o="
+      notify: Restart beszel-agent
+
+    - name: Start beszel-agent stack
+      community.docker.docker_compose_v2:
+        project_src: "{{ beszel_agent_dir }}"
+        state: present
+        pull: missing

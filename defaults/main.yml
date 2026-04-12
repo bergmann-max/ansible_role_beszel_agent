@@ -1,2 +1,10 @@
 ---
-# roles/ansible_role_template/defaults/main.yml
+# roles/ansible_role_beszel_agent/defaults/main.yml
+
+beszel_agent_dir: /opt/beszel-agent
+beszel_agent_owner: ""
+beszel_agent_group: "docker"
+beszel_agent_image: "henrygd/beszel-agent:latest"
+beszel_agent_port: 45876
+beszel_agent_key: ""
+beszel_hub_url: ""

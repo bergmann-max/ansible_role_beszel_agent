@@ -1,8 +1,8 @@
 ---
-# roles/ansible_role_template/handlers/main.yml
+# roles/ansible_role_beszel_agent/handlers/main.yml
 
-- name: Reload bar
-  ansible.builtin.systemd:
-    name: bar
-    state: reloaded
-    enabled: true
+- name: Restart beszel-agent
+  community.docker.docker_compose_v2:
+    project_src: "{{ beszel_agent_dir }}"
+    state: present
+    recreate: always
