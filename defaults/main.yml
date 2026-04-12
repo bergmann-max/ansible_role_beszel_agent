@@ -6,5 +6,5 @@ beszel_agent_owner: ""
 beszel_agent_group: "docker"
 beszel_agent_image: "henrygd/beszel-agent:latest"
 beszel_agent_port: 45876
-beszel_agent_key: ""
+beszel_agent_token: ""
 beszel_agent_hub_url: ""
