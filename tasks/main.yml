@@ -7,9 +7,10 @@
     - name: Assert required variables are set
       ansible.builtin.assert:
         that:
-          - beszel_agent_token | length > 0
           - beszel_agent_hub_url | length > 0
-        fail_msg: "beszel_agent_token and beszel_agent_hub_url must be set"
+          - beszel_agent_key | length > 0
+          - beszel_agent_token | length > 0
+        fail_msg: "beszel_agent_hub_url, beszel_agent_key, and beszel_agent_token must be set"
 
     - name: Ensure beszel-agent directory exists
       ansible.builtin.file:

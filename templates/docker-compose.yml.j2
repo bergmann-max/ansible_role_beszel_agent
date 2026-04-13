@@ -1,3 +1,5 @@
+{# Managed by Ansible – role: ansible_role_beszel_agent #}
+{# Manual changes will be overwritten on the next Ansible run! #}
 ---
 services:
   beszel-agent:
@@ -11,4 +13,5 @@ services:
     environment:
       LISTEN: "0.0.0.0:{{ beszel_agent_port }}"
       HUB_URL: "{{ beszel_agent_hub_url }}"
-      KEY: "{{ beszel_agent_token }}"
+      KEY: "{{ beszel_agent_key }}"
+      TOKEN: "{{ beszel_agent_token }}"

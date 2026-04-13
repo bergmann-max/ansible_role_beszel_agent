@@ -17,15 +17,18 @@ An Ansible role that deploys the Beszel agent via Docker Compose to monitor a ho
 
 Variables defaults (`defaults/main.yml`):
 
-| Variable              | Default                        | Description                                      |
-|-----------------------|--------------------------------|--------------------------------------------------|
-| `beszel_agent_dir`    | `/opt/beszel-agent`            | Directory where the agent files are deployed     |
-| `beszel_agent_owner`  | `""`                           | Owner of the agent directory and files           |
-| `beszel_agent_group`  | `"docker"`                     | Group of the agent directory and files           |
-| `beszel_agent_image`  | `"henrygd/beszel-agent:latest"`| Docker image to use for the Beszel agent         |
-| `beszel_agent_port`   | `45876`                        | Port the agent listens on                        |
-| `beszel_agent_key`    | `""`                           | Public key from the Beszel hub for authentication|
-| `beszel_agent_hub_url`      | `""`                           | URL of the Beszel hub instance                   |
+| Variable                | Default                          | Description                                           |
+|-------------------------|----------------------------------|-------------------------------------------------------|
+| `beszel_agent_dir`      | `/opt/beszel-agent`              | Directory where the agent files are deployed          |
+| `beszel_agent_owner`    | `""`                             | Owner of the agent directory and files                |
+| `beszel_agent_group`    | `"docker"`                       | Group of the agent directory and files                |
+| `beszel_agent_image`    | `"henrygd/beszel-agent:latest"`  | Docker image to use for the Beszel agent              |
+| `beszel_agent_port`     | `45876`                          | Port the agent listens on                             |
+| `beszel_agent_hub_url`  | `"https://beszel.example.com"`   | URL of the Beszel hub instance                        |
+| `beszel_agent_key`      | `""`                             | Public key from the Beszel hub for authentication     |
+| `beszel_agent_token`    | `""`                             | Token for authenticating the agent with the hub       |
+
+> `beszel_agent_hub_url`, `beszel_agent_key`, and `beszel_agent_token` are required and must be set — the role will fail if any of them is empty.
 
 ## Installation
 
@@ -48,17 +51,17 @@ ansible-galaxy install -r requirements.yml
 
 ## Tags
 
-| Tag     | Description                        |
-|---------|------------------------------------|
-| `beszel` | Runs all Beszel agent tasks       |
+| Tag      | Description                   |
+|----------|-------------------------------|
+| `beszel` | Runs all Beszel agent tasks   |
 
 ---
 
 ## Handlers
 
-| Handler                  | Description                                              |
-|--------------------------|----------------------------------------------------------|
-| `Restart beszel-agent`   | Recreates the Docker Compose stack when config changes   |
+| Handler               | Description                                            |
+|-----------------------|--------------------------------------------------------|
+| `Restart beszel-agent` | Recreates the Docker Compose stack when config changes |
 
 ---
 
