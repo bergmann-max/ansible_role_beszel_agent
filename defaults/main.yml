@@ -6,6 +6,6 @@ beszel_agent_owner: ""
 beszel_agent_group: "docker"
 beszel_agent_image: "henrygd/beszel-agent:latest"
 beszel_agent_port: 45876
-beszel_agent_hub_url: "https;//beszel.example.com"
-beszel_agent_key: ""
+beszel_agent_hub_url: "https://beszel.example.com"
+beszel_agent_key: "ssh-ed25519 AAAAC3Nza..."
 beszel_agent_token: ""

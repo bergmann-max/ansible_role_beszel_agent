@@ -10,7 +10,7 @@
           - beszel_agent_hub_url | length > 0
           - beszel_agent_key | length > 0
           - beszel_agent_token | length > 0
-        fail_msg: "beszel_agent_hub_url, beszel_agent_key, and beszel_agent_token must be set"
+        fail_msg: "beszel_agent_hub_url, beszel_agent_key, and beszel_agent_token must all be set and non-empty"
 
     - name: Ensure beszel-agent directory exists
       ansible.builtin.file:
@@ -19,6 +19,16 @@
         owner: "{{ beszel_agent_owner }}"
         group: "{{ beszel_agent_group }}"
         mode: "u=rwx,g=rx,o="
+
+    - name: Deploy .env file
+      ansible.builtin.template:
+        src: beszel-agent.env.j2
+        dest: "{{ beszel_agent_dir }}/.env"
+        owner: "{{ beszel_agent_owner }}"
+        group: "{{ beszel_agent_group }}"
+        mode: "u=rw,g=,o="
+      notify: Restart beszel-agent
+      no_log: true
 
     - name: Deploy docker-compose.yml
       ansible.builtin.template:
@@ -34,3 +44,5 @@
         project_src: "{{ beszel_agent_dir }}"
         state: present
         pull: missing
+      register: beszel_agent_compose_result
+      changed_when: beszel_agent_compose_result.actions | default([]) | length > 0

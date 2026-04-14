@@ -17,18 +17,20 @@ An Ansible role that deploys the Beszel agent via Docker Compose to monitor a ho
 
 Variables defaults (`defaults/main.yml`):
 
-| Variable                | Default                          | Description                                           |
-|-------------------------|----------------------------------|-------------------------------------------------------|
-| `beszel_agent_dir`      | `/opt/beszel-agent`              | Directory where the agent files are deployed          |
-| `beszel_agent_owner`    | `""`                             | Owner of the agent directory and files                |
-| `beszel_agent_group`    | `"docker"`                       | Group of the agent directory and files                |
-| `beszel_agent_image`    | `"henrygd/beszel-agent:latest"`  | Docker image to use for the Beszel agent              |
-| `beszel_agent_port`     | `45876`                          | Port the agent listens on                             |
-| `beszel_agent_hub_url`  | `"https://beszel.example.com"`   | URL of the Beszel hub instance                        |
-| `beszel_agent_key`      | `""`                             | Public key from the Beszel hub for authentication     |
-| `beszel_agent_token`    | `""`                             | Token for authenticating the agent with the hub       |
+| Variable               | Default                         | Description                                       |
+|------------------------|---------------------------------|---------------------------------------------------|
+| `beszel_agent_dir`     | `/opt/beszel-agent`             | Directory where the agent files are deployed      |
+| `beszel_agent_owner`   | `""`                            | Owner of the agent directory and files            |
+| `beszel_agent_group`   | `"docker"`                      | Group of the agent directory and files            |
+| `beszel_agent_image`   | `"henrygd/beszel-agent:latest"` | Docker image to use for the Beszel agent          |
+| `beszel_agent_port`    | `45876`                         | Port the agent listens on                         |
+| `beszel_agent_hub_url` | `"https://beszel.example.com"`  | URL of the Beszel hub instance                    |
+| `beszel_agent_key`     | `""`                            | Public key from the Beszel hub for authentication |
+| `beszel_agent_token`   | `""`                            | Token for authenticating the agent with the hub   |
 
 > `beszel_agent_hub_url`, `beszel_agent_key`, and `beszel_agent_token` are required and must be set — the role will fail if any of them is empty.
+
+> `beszel_agent_token` is deployed into a separate `.env` file (`{{ beszel_agent_dir }}/.env`) with owner-only read permissions (`u=rw,g=,o=`) and is never written into `docker-compose.yml`. Use `ansible-vault` to encrypt this value.
 
 ## Installation
 
@@ -49,19 +51,28 @@ ansible-galaxy install -r requirements.yml
 
 ---
 
+## Deployed Files
+
+| File                          | Permissions  | Description                                      |
+|-------------------------------|--------------|--------------------------------------------------|
+| `{{ beszel_agent_dir }}/docker-compose.yml` | `u=rw,g=r,o=` | Docker Compose stack definition     |
+| `{{ beszel_agent_dir }}/.env`               | `u=rw,g=,o=`  | Contains `TOKEN` — owner-readable only |
+
+---
+
 ## Tags
 
-| Tag      | Description                   |
-|----------|-------------------------------|
-| `beszel` | Runs all Beszel agent tasks   |
+| Tag      | Description                 |
+|----------|-----------------------------|
+| `beszel` | Runs all Beszel agent tasks |
 
 ---
 
 ## Handlers
 
-| Handler               | Description                                            |
-|-----------------------|--------------------------------------------------------|
-| `Restart beszel-agent` | Recreates the Docker Compose stack when config changes |
+| Handler                | Trigger                                      | Description                                            |
+|------------------------|----------------------------------------------|--------------------------------------------------------|
+| `Restart beszel-agent` | `.env` or `docker-compose.yml` changed       | Recreates the Docker Compose stack when config changes |
 
 ---
 

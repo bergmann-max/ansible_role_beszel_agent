@@ -6,3 +6,4 @@
     project_src: "{{ beszel_agent_dir }}"
     state: present
     recreate: always
+  listen: "Restart beszel-agent"
