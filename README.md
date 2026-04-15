@@ -28,9 +28,7 @@ Variables defaults (`defaults/main.yml`):
 | `beszel_agent_key`     | `""`                            | Public key from the Beszel hub for authentication |
 | `beszel_agent_token`   | `""`                            | Token for authenticating the agent with the hub   |
 
-> `beszel_agent_hub_url`, `beszel_agent_key`, and `beszel_agent_token` are required and must be set — the role will fail if any of them is empty.
-
-> `beszel_agent_token` is deployed into a separate `.env` file (`{{ beszel_agent_dir }}/.env`) with owner-only read permissions (`u=rw,g=,o=`) and is never written into `docker-compose.yml`. Use `ansible-vault` to encrypt this value.
+> `beszel_agent_token` is deployed into a separate `.env` file (`{{ beszel_agent_dir }}/.env`) with owner-only read permissions (`u=rw,g=,o=`) and is never written into `docker-compose.yml`.
 
 ## Installation
 
@@ -49,8 +47,6 @@ roles:
 ansible-galaxy install -r requirements.yml
 ```
 
----
-
 ## Deployed Files
 
 | File                          | Permissions  | Description                                      |
@@ -58,15 +54,11 @@ ansible-galaxy install -r requirements.yml
 | `{{ beszel_agent_dir }}/docker-compose.yml` | `u=rw,g=r,o=` | Docker Compose stack definition     |
 | `{{ beszel_agent_dir }}/.env`               | `u=rw,g=,o=`  | Contains `TOKEN` — owner-readable only |
 
----
-
 ## Tags
 
 | Tag      | Description                 |
 |----------|-----------------------------|
 | `beszel` | Runs all Beszel agent tasks |
-
----
 
 ## Handlers
 
@@ -74,19 +66,13 @@ ansible-galaxy install -r requirements.yml
 |------------------------|----------------------------------------------|--------------------------------------------------------|
 | `Restart beszel-agent` | `.env` or `docker-compose.yml` changed       | Recreates the Docker Compose stack when config changes |
 
----
-
 ## License
 
 Unlicense
 
----
-
 ## Dependencies
 
 No dependencies.
-
----
 
 ## Author Information
 
