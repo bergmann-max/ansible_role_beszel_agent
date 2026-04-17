@@ -2,7 +2,8 @@
 # roles/ansible_role_beszel_agent/meta/main.yml
 
 galaxy_info:
-  role_name: ansible_role_beszel_agent
+  role_name: beszel_agent
+  namespace: maxbergmann
   author: Max Bergmann
   description: Deploys the Beszel agent via Docker Compose to monitor a host with a Beszel hub instance.
   license: Unlicense
