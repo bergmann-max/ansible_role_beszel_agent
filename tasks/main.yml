@@ -39,6 +39,11 @@
         mode: "u=rw,g=r,o="
       notify: Restart beszel-agent
 
+    - name: Remove stale beszel-agent container if not managed by compose
+      community.docker.docker_container:
+        name: beszel-agent
+        state: absent
+
     - name: Start beszel-agent stack
       community.docker.docker_compose_v2:
         project_src: "{{ beszel_agent_dir }}"
